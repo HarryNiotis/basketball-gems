@@ -18,7 +18,7 @@ app.get('/teams', async (req, res) => {
     const teams = await Team.findAll();
     res.json(teams);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch teams' });
+    res.status(500).json({ error: `Failed to fetch teams:\n ${error}` });
   }
 });
 
@@ -27,7 +27,7 @@ app.get('/competitions', async (req, res) => {
     const competitions = await Competition.findAll();
     res.json(competitions);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch competitions' });
+    res.status(500).json({ error: `Failed to fetch competitions:\n ${error}` });
   }
 });
 
