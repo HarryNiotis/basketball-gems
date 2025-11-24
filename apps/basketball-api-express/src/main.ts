@@ -5,12 +5,32 @@
 
 import express from 'express';
 import { sequelize } from './database';
+import { Team, Competition } from './models';
 
 const app = express();
 
 app.get('/', async (req, res) => {
   res.send({ message: 'Welcome to basketball-api-express!' });
 });
+
+app.get('/teams', async (req, res) => {
+  try {
+    const teams = await Team.findAll();
+    res.json(teams);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch teams' });
+  }
+});
+
+app.get('/competitions', async (req, res) => {
+  try {
+    const competitions = await Competition.findAll();
+    res.json(competitions);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch competitions' });
+  }
+});
+
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
