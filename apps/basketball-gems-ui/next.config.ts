@@ -5,7 +5,7 @@ import { NextConfig } from 'next';
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig: NextConfig = {
-  typedRoutes: true,
+  typedRoutes: true
 };
 
 const plugins = [
