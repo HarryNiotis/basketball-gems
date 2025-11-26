@@ -1,0 +1,9 @@
+{
+  "name": "basketball-gems-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/basketball-gems-ui",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project basketball-gems-ui --web",
+  "targets": {}
+}
