@@ -1,0 +1,30 @@
+{
+  "migrations": [
+    {
+      "version": "22.2.0-beta.2",
+      "description": "Convert jest.config.ts files from ESM to CJS syntax (export default -> module.exports, import -> require) for projects using CommonJS resolution to ensure correct loading under Node.js type-stripping.",
+      "implementation": "./src/migrations/update-22-2-0/convert-jest-config-to-cjs",
+      "package": "@nx/jest",
+      "name": "convert-jest-config-to-cjs"
+    },
+    {
+      "cli": "nx",
+      "version": "22.2.0-beta.1",
+      "requires": {
+        "next": ">=16.0.0"
+      },
+      "description": "Create AI Instructions to help migrate users workspaces to Next.js 16.",
+      "factory": "./src/migrations/update-22-2-0/create-ai-instructions-for-next-16",
+      "package": "@nx/next",
+      "name": "update-22-2-0-create-ai-instructions-for-next-16"
+    }
+  ],
+  "nx-console": {
+    "initialGitRef": {
+      "ref": "0ccddb03eb26750a338bcbbfa75962017587282a",
+      "subject": "UI: Basic auth0 integration"
+    },
+    "targetVersion": "latest",
+    "confirmedPackageUpdates": true
+  }
+}
