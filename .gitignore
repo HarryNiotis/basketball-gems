@@ -53,3 +53,7 @@ vite.config.*.timestamp*
 # Next.js
 .next
 out
+# .NET
+**/bin/
+**/obj/
+/artifacts/

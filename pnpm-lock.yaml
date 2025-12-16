@@ -60,6 +60,9 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^16.0.4
         version: 16.0.4
+      '@nx/dotnet':
+        specifier: 22.2.5
+        version: 22.2.5(nx@22.2.5(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17)))
       '@nx/eslint':
         specifier: 22.2.5
         version: 22.2.5(@babel/traverse@7.28.5)(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17))(@zkochan/js-yaml@0.0.7)(eslint@9.39.1(jiti@2.6.1))(nx@22.2.5(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17)))
@@ -1787,6 +1790,9 @@ packages:
 
   '@nx/docker@22.2.5':
     resolution: {integrity: sha512-c3mVVjpn2ldLvfNg3wpm0lMSCdqB6HS8Fbiofq7SfPxMQqgwSqChukMP17SCdm3Ek1LbWILPjSiOlr1a66C6HA==}
+
+  '@nx/dotnet@22.2.5':
+    resolution: {integrity: sha512-XTTvCMHDMtb4oWezvBdNCMxteMeqCxhcPZQPpyJDWtKY9Cekm3fUGiTcpDVxyJvmvLIbJLLRcj/rDG9b2X9sCg==}
 
   '@nx/eslint-plugin@22.2.5':
     resolution: {integrity: sha512-fA84R4NfNe8LLi96x5ubOMnTim+xu9ayMWzzXyrY4tWZ9r7JEDp8kc9bwRHBmHbZMoAYVh4kTEpenzjkkgQ+Lw==}
@@ -10385,6 +10391,14 @@ snapshots:
     dependencies:
       '@nx/devkit': 22.2.5(nx@22.2.5(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17)))
       enquirer: 2.3.6
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - nx
+
+  '@nx/dotnet@22.2.5(nx@22.2.5(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17)))':
+    dependencies:
+      '@nx/devkit': 22.2.5(nx@22.2.5(@swc-node/register@1.11.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.3(@swc/helpers@0.5.17)))
+      ignore: 7.0.5
       tslib: 2.8.1
     transitivePeerDependencies:
       - nx
