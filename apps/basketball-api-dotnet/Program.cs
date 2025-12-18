@@ -1,7 +1,20 @@
 using basketball_api_dotnet.Data;
 using Microsoft.EntityFrameworkCore;
+using Auth0.AspNetCore.Authentication.Api;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuth0ApiAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.JwtBearerOptions = new JwtBearerOptions
+    {
+        Audience = builder.Configuration["Auth0:Audience"]
+    };
+});
+
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -23,7 +36,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => new { message = "Welcome to basketball-api-dotnet!" })
