@@ -1,5 +1,6 @@
 using basketball_api_dotnet.Data;
 using basketball_api_dotnet.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace basketball_api_dotnet.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CompetitionsController : ControllerBase
     {
         private readonly BasketballDbContext _context;
