@@ -1,8 +1,8 @@
 import { fetchTeamByCode, fetchTeamGames } from './fetcher';
 
-interface Params {
+type Params = {
   code: string;
-}
+};
 
 export default async function TeamDetail({
   params,
@@ -66,11 +66,9 @@ export default async function TeamDetail({
 
         {/* Games Section */}
         <div className="flex flex-col">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">
-            Season Games
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pr-4 h-[calc(100vh-580px)]">
-            {games.map((game) => (
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Games</h3>
+          <div className="grid grid-cols-1 gap-6 overflow-y-auto pr-4 h-[calc(100vh-580px)]">
+            {games.reverse().map((game) => (
               <div
                 key={game.id}
                 className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
@@ -85,7 +83,7 @@ export default async function TeamDetail({
                     })}
                   </p>
                   <p className="text-xs font-semibold text-blue-600 capitalize">
-                    {game.status}
+                    {game.played ? 'Finished' : 'Upcoming'}
                   </p>
                 </div>
 
@@ -93,49 +91,47 @@ export default async function TeamDetail({
                 <div className="flex items-center justify-between gap-4">
                   {/* Home Team */}
                   <div className="flex-1 flex flex-col items-center">
-                    {game.homeTeam.images?.crest && (
+                    {game.local.club.images?.crest && (
                       <img
-                        src={game.homeTeam.images.crest}
-                        alt={game.homeTeam.abbreviatedName}
+                        src={game.local.club.images.crest}
+                        alt={game.local.club.abbreviatedName}
                         className="w-12 h-12 object-contain mb-2"
                       />
                     )}
                     <p className="text-sm font-semibold text-gray-900 text-center">
-                      {game.homeTeam.abbreviatedName}
+                      {game.local.club.abbreviatedName}
                     </p>
                   </div>
 
                   {/* Score or vs */}
                   <div className="flex flex-col items-center">
-                    {game.status === 'finished' &&
-                      game.homeScore !== undefined &&
-                      game.awayScore !== undefined && (
-                        <div className="text-center">
-                          <p className="text-2xl font-bold text-gray-900">
-                            {game.homeScore}
-                          </p>
-                          <p className="text-gray-600 text-xs">-</p>
-                          <p className="text-2xl font-bold text-gray-900">
-                            {game.awayScore}
-                          </p>
-                        </div>
-                      )}
-                    {game.status !== 'finished' && (
+                    {game.played && (
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {game.local.score}
+                        </p>
+                        <p className="text-gray-600 text-xs">-</p>
+                        <p className="text-2xl font-bold text-gray-900">
+                          {game.road.score}
+                        </p>
+                      </div>
+                    )}
+                    {!game.played && (
                       <p className="text-gray-600 font-semibold">VS</p>
                     )}
                   </div>
 
                   {/* Away Team */}
                   <div className="flex-1 flex flex-col items-center">
-                    {game.awayTeam.images?.crest && (
+                    {game.road.club.images?.crest && (
                       <img
-                        src={game.awayTeam.images.crest}
-                        alt={game.awayTeam.abbreviatedName}
+                        src={game.road.club.images.crest}
+                        alt={game.road.club.abbreviatedName}
                         className="w-12 h-12 object-contain mb-2"
                       />
                     )}
                     <p className="text-sm font-semibold text-gray-900 text-center">
-                      {game.awayTeam.abbreviatedName}
+                      {game.road.club.abbreviatedName}
                     </p>
                   </div>
                 </div>
