@@ -1,83 +1,52 @@
-interface Team {
-  id: string;
+type Country = {
+  code: string;
   name: string;
-  country: string;
-  image?: string;
-}
+};
 
-const mockTeams: Team[] = [
-  {
-    id: '1',
-    name: 'Real Madrid',
-    country: 'Spain',
-    image: 'https://via.placeholder.com/150?text=Real+Madrid',
-  },
-  {
-    id: '2',
-    name: 'FC Barcelona',
-    country: 'Spain',
-    image: 'https://via.placeholder.com/150?text=Barcelona',
-  },
-  {
-    id: '3',
-    name: 'Olympiakos',
-    country: 'Greece',
-    image: 'https://via.placeholder.com/150?text=Olympiakos',
-  },
-  {
-    id: '4',
-    name: 'CSKA Moscow',
-    country: 'Russia',
-    image: 'https://via.placeholder.com/150?text=CSKA',
-  },
-  {
-    id: '5',
-    name: 'Panathinaikos',
-    country: 'Greece',
-    image: 'https://via.placeholder.com/150?text=Panathinaikos',
-  },
-  {
-    id: '6',
-    name: 'Lakers',
-    country: 'USA',
-    image: 'https://via.placeholder.com/150?text=Lakers',
-  },
-  {
-    id: '7',
-    name: 'Celtics',
-    country: 'USA',
-    image: 'https://via.placeholder.com/150?text=Celtics',
-  },
-  {
-    id: '8',
-    name: 'Warriors',
-    country: 'USA',
-    image: 'https://via.placeholder.com/150?text=Warriors',
-  },
-  {
-    id: '9',
-    name: 'Miami Heat',
-    country: 'USA',
-    image: 'https://via.placeholder.com/150?text=Heat',
-  },
-  {
-    id: '10',
-    name: 'Denver Nuggets',
-    country: 'USA',
-    image: 'https://via.placeholder.com/150?text=Nuggets',
-  },
-];
+type Images = {
+  crest?: string;
+};
+
+type Team = {
+  code: string;
+  name: string;
+  abbreviatedName: string;
+  editorialName: string;
+  tvCode: string;
+  isVirtual: boolean;
+  images: Images;
+  sponsor: string;
+  clubPermanentName: string;
+  clubPermanentAlias: string;
+  country: Country;
+  address: string;
+  website: string;
+  ticketsUrl: string;
+  twitterAccount: string;
+  venueCode: string;
+  city: string;
+  president: string;
+  phone: string;
+};
+
+type ApiResponse = {
+  data: Team[];
+};
 
 export async function fetchTeams(): Promise<Team[]> {
-  // TODO: Replace with actual API call
-  // const response = await fetch('/api/teams');
-  // if (!response.ok) {
-  //   throw new Error('Failed to fetch teams');
-  // }
-  // return response.json();
-
-  // For now, return mock data
-  return Promise.resolve(mockTeams);
+  try {
+    const response = await fetch(
+      'https://api-live.euroleague.net/v2/competitions/E/seasons/E2025/clubs',
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch teams from Euroleague API');
+    }
+    const data: ApiResponse = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    throw error;
+  }
 }
 
 export type { Team };
