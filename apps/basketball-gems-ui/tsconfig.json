@@ -29,12 +29,10 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "../../apps/basketball-gems-ui/.next/types/**/*.ts",
-    "../../dist/apps/basketball-gems-ui/.next/types/**/*.ts",
-    "next-env.d.ts"
-, "postcss.config.mjs"  ],
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "postcss.config.mjs"
+  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",
