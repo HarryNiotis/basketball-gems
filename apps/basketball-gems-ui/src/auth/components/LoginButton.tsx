@@ -1,12 +1,11 @@
-"use client";
+import { Button } from '@/components/ui/button';
+import { loginRoute } from '@/lib/routes';
+import Link from 'next/link';
 
 export const LoginButton = () => {
   return (
-    <a
-      href="/auth/login"
-      className="button login"
-    >
-      Log In
-    </a>
+    <Link href={loginRoute}>
+      <Button>Log In</Button>
+    </Link>
   );
-}
+};

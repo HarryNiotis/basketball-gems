@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { fetchTeams } from './fetcher';
+import { teamRoute } from '@/lib/routes';
 
 export default async function Teams() {
   const teams = await fetchTeams();
@@ -10,7 +11,7 @@ export default async function Teams() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col h-[calc(100vh-180px)]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-y-auto pr-4">
           {teams.map((team) => (
-            <Link key={team.code} href={`/teams/${team.code}/`}>
+            <Link key={team.code} href={teamRoute(team.code)}>
               <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col items-center text-center cursor-pointer hover:bg-gray-50">
                 {/* Team Crest/Logo */}
                 {team.images?.crest && (
