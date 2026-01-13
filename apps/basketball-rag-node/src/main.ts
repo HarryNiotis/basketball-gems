@@ -1,35 +1,39 @@
-import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
-import { MemoryVectorStore } from '@langchain/classic/vectorstores/memory';
-import 'cheerio';
-import { CheerioWebBaseLoader } from '@langchain/community/document_loaders/web/cheerio';
 import dotenv from 'dotenv';
+import { initStore } from './store';
+import { agent } from './agent';
+import readline from 'readline/promises';
 
 dotenv.config();
 
 async function main() {
-  const model = new ChatOpenAI({
-    model: 'gpt-5-nano',
-    apiKey: process.env.OPENAPI_KEY,
+  console.log('Starting the basketball RAG node...');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
   });
 
-  const embeddings = new OpenAIEmbeddings({
-    model: 'text-embedding-3-small',
+  await initStore();
+
+  const inputMessage = await rl.question('Enter your message: ');
+
+  const agentInputs = {
+    messages: [{ role: 'user', content: inputMessage }],
+  };
+
+  const stream = await agent.stream(agentInputs, {
+    streamMode: 'values',
   });
 
-  const vectorStore = new MemoryVectorStore(embeddings);
-
-  const pTagSelector = 'p';
-  const cheerioLoader = new CheerioWebBaseLoader(
-    'https://www.gazzetta.gr/basketball/euroleague/2505200/filtro-boytigmeno-ston-idrota/',
-    {
-      selector: pTagSelector,
-    },
-  );
-
-  const docs = await cheerioLoader.load();
-
-  console.assert(docs.length === 1);
-  console.log(`Total characters: ${docs[0].pageContent.length}`);
+  for await (const step of stream) {
+    console.log({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      messages: JSON.stringify(step.messages[step.messages.length - 1]),
+    });
+    // const lastMessage = step.messages[step.messages.length - 1];
+    // console.log(`[${lastMessage.role}]: ${lastMessage.content}`);
+    console.log('-----\n');
+  }
 }
 
 main();
