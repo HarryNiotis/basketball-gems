@@ -13,13 +13,17 @@ export default async function Layout({
   return (
     <html lang="en">
       <body>
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="flex-1 w-full flex flex-col px-6 py-8">
+        {user ? (
+          <SidebarProvider>
+            <AppSidebar />
             <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider>
+            <main className="flex-1 w-full flex flex-col px-6 py-8">
+              {children}
+            </main>
+          </SidebarProvider>
+        ) : (
+          <main>{children}</main>
+        )}
       </body>
     </html>
   );

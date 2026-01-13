@@ -1,5 +1,5 @@
 import { fetchTeamByCode, fetchTeamGames } from './fetcher';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 type Params = {
   code: string;
@@ -64,9 +64,6 @@ export default async function TeamDetail({
               <p className="text-gray-600 mb-4">
                 <span className="font-semibold">City:</span> {team.city}
               </p>
-              <p className="text-gray-600">
-                <span className="font-semibold">Coach:</span> {team.president}
-              </p>
             </div>
           </CardContent>
         </Card>
@@ -109,16 +106,16 @@ export default async function TeamDetail({
                     </div>
 
                     {/* Score or vs */}
-                    <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center">
                       {game.played && (
-                        <div className="text-center">
-                          <p className="text-2xl font-bold text-gray-900">
+                        <div className="flex flex-row items-center gap-2">
+                          <div className="text-2xl font-bold text-gray-900">
                             {game.local.score}
-                          </p>
-                          <p className="text-gray-600 text-xs">-</p>
-                          <p className="text-2xl font-bold text-gray-900">
+                          </div>
+                          <div className="text-gray-600 text-xs">-</div>
+                          <div className="text-2xl font-bold text-gray-900">
                             {game.road.score}
-                          </p>
+                          </div>
                         </div>
                       )}
                       {!game.played && (

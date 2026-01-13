@@ -1,12 +1,13 @@
-"use client";
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { logoutRoute } from '@/lib/routes';
+import Link from 'next/link';
 
 export const LogoutButton = () => {
   return (
-    <a
-      href="/auth/logout"
-      className="button logout"
-    >
-      Log Out
-    </a>
+    <Link href={logoutRoute}>
+      <Button>Log Out</Button>
+    </Link>
   );
-}
+};
