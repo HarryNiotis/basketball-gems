@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Separator } from './ui/separator';
 import Link from 'next/link';
-import { dashboardRoute, teamsRoute } from '@/lib/routes';
+import { chatRoute, dashboardRoute, teamsRoute } from '@/lib/routes';
 import { usePathname } from 'next/navigation';
 
 export function AppSidebar() {
@@ -35,6 +35,12 @@ export function AppSidebar() {
             className={`w-full block px-4 py-2 ${pathname === teamsRoute ? 'font-semibold' : 'hover:bg-gray-100 rounded'}`}
           >
             Teams
+          </Link>
+          <Link
+            href={chatRoute}
+            className={`w-full block px-4 py-2 ${pathname === chatRoute ? 'font-semibold' : 'hover:bg-gray-100 rounded'}`}
+          >
+            Chat
           </Link>
         </SidebarGroup>
         <SidebarGroup />
