@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const LoginButton = () => {
   return (
     <Link href={loginRoute}>
-      <Button>Log In</Button>
+      <Button className="cursor-pointer">Log In</Button>
     </Link>
   );
 };

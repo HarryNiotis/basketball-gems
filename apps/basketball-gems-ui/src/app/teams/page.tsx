@@ -27,7 +27,6 @@ export default async function Teams() {
                   <h3 className="text-lg font-bold text-gray-900 mb-1">
                     {team.abbreviatedName}
                   </h3>
-                  <p className="text-sm text-gray-600">{team.country.name}</p>
                 </div>
               </CardContent>
             </Card>
