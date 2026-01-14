@@ -44,6 +44,12 @@ export default function Chat() {
                             return (
                               <div key={`${message.id}-${i}`}>{part.text}</div>
                             );
+                          case 'tool-basketball':
+                            return (
+                              <div key={`${message.id}-${i}`}>
+                                {part.output as string}
+                              </div>
+                            );
                         }
                       })}
                     </div>
