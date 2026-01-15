@@ -1,32 +1,35 @@
 import 'cheerio';
-import { Chroma } from '@langchain/community/vectorstores/chroma';
 import { CheerioWebBaseLoader } from '@langchain/community/document_loaders/web/cheerio';
-import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
+import { OpenAIEmbeddings } from '@langchain/openai';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-
-const model = new ChatOpenAI({
-  model: 'gpt-5-nano',
-  openAIApiKey: process.env.OPENAI_API_KEY,
-});
+import { MongoDBAtlasVectorSearch } from '@langchain/mongodb';
+import { MongoClient } from 'mongodb';
 
 const embeddings = new OpenAIEmbeddings({
   model: 'text-embedding-3-small',
 });
-export const vectorStore = new Chroma(embeddings, {
-  collectionName: 'basketball-blogs',
-  clientParams: {
-    host: 'localhost',
-    port: 8000,
-  },
+
+const client = new MongoClient(process.env.MONGODB_ATLAS_URI || '');
+const collection = client
+  .db(process.env.MONGODB_ATLAS_DB_NAME)
+  .collection(process.env.MONGODB_ATLAS_COLLECTION_NAME);
+
+export const vectorStore = new MongoDBAtlasVectorSearch(embeddings, {
+  collection: collection,
+  indexName: process.env.MONGODB_BASKETBALL_VECTOR_INDEX_NAME,
+  textKey: 'text',
+  embeddingKey: 'embedding',
 });
 
 export const initStore = async () => {
-  vectorStore.similaritySearch('Παναθηναϊκός', 1).then((res) => {
-    if (res.length > 0) {
-      console.log('Vector store already initialized.');
-      return;
-    }
-  });
+  const res = await vectorStore.similaritySearch('Παναθηναϊκός', 1);
+  if (res.length > 0) {
+    console.log('Vector store already initialized.');
+    return;
+  }
+
+  console.log('Initializing vector store with basketball blog data...');
+
   const pTagSelector = 'div.content.is-relative > p';
   const cheerioLoader = new CheerioWebBaseLoader(
     'https://www.gazzetta.gr/basketball/euroleague/2505200/filtro-boytigmeno-ston-idrota/',
@@ -48,4 +51,19 @@ export const initStore = async () => {
   console.log(`Split blog post into ${allSplits.length} sub-documents.`);
 
   await vectorStore.addDocuments(allSplits);
+
+  collection.createSearchIndex({
+    name: process.env.MONGODB_BASKETBALL_VECTOR_INDEX_NAME,
+    type: 'vectorSearch',
+    definition: {
+      fields: [
+        {
+          type: 'vector',
+          path: 'embedding',
+          numDimensions: 1536,
+          similarity: 'cosine',
+        },
+      ],
+    },
+  });
 };

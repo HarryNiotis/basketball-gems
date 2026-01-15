@@ -32,7 +32,7 @@ export default function Chat() {
                     className={`flex ${message.role !== 'user' ? 'px-5' : ''}`}
                   >
                     <div
-                      className={`max-w-sm lg:max-w-5xl px-4 py-2 rounded-lg ${
+                      className={`max-w-sm lg:max-w-5xl px-4 py-2 rounded-lg break-words overflow-hidden ${
                         message.role === 'user'
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-200 text-gray-900'
@@ -42,14 +42,33 @@ export default function Chat() {
                         switch (part.type) {
                           case 'text':
                             return (
-                              <div key={`${message.id}-${i}`}>{part.text}</div>
-                            );
-                          case 'tool-basketball':
-                            return (
-                              <div key={`${message.id}-${i}`}>
-                                {part.output as string}
+                              <div
+                                key={`${message.id}-${i}`}
+                                className="break-words whitespace-pre-wrap"
+                              >
+                                {part.text}
                               </div>
                             );
+                          case 'tool-basketball': {
+                            console.log('Rendering tool-basketball part:', {
+                              output: part,
+                            });
+                            const output = JSON.parse(
+                              part.output as string,
+                            ) as {
+                              title?: string;
+                              content?: string;
+                            };
+                            return (
+                              <div
+                                key={`${message.id}-${i}`}
+                                className="break-words whitespace-pre-wrap"
+                              >
+                                {output.title}
+                                {output.content}
+                              </div>
+                            );
+                          }
                         }
                       })}
                     </div>
