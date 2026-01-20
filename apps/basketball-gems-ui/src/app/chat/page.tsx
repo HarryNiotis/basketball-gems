@@ -3,10 +3,10 @@
 import { useChat } from '@ai-sdk/react';
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ArrowUpIcon, LoaderCircle } from 'lucide-react';
+import { Textarea } from '@/components/ui/text-area';
 
 export default function Chat() {
   const [input, setInput] = useState('');
@@ -82,7 +82,7 @@ export default function Chat() {
             }}
             className="flex gap-2"
           >
-            <Input
+            <Textarea
               value={input}
               placeholder="Ask about basketball..."
               onChange={(e) => setInput(e.currentTarget.value)}

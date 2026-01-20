@@ -12,7 +12,6 @@ export async function POST(req: Request) {
       'You are a helpful assistant specialised in basketball.' +
       'You have access to a tool that retrieves context from a blog post.' +
       'Use the tool to help answer user queries.' +
-      'Do not list the tools results in the response.' +
       'Answer in a concise and informative manner.',
     messages: await convertToModelMessages(messages),
     tools: {
