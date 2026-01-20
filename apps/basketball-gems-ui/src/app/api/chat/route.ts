@@ -9,7 +9,11 @@ export async function POST(req: Request) {
   const result = streamText({
     model: openai('gpt-5'),
     system:
-      'You are a helpful assistant. You have access to a tool that retrieves context from a blog post. Use the tool to help answer user queries.',
+      'You are a helpful assistant specialised in basketball.' +
+      'You have access to a tool that retrieves context from a blog post.' +
+      'Use the tool to help answer user queries.' +
+      'Do not list the tools results in the response.' +
+      'Answer in a concise and informative manner.',
     messages: await convertToModelMessages(messages),
     tools: {
       basketball: tool({
@@ -21,15 +25,13 @@ export async function POST(req: Request) {
           console.log('Executing basketball tool with query:', query);
           const retrievedDocs = await vectorStore.similaritySearch(query);
           console.log('Retrieved documents:', retrievedDocs.length);
-          const serialized =
-            retrievedDocs.length === 0
-              ? 'No relevant documents found.'
-              : retrievedDocs.map((doc) => ({
-                  title: doc.metadata.title,
-                  content: doc.pageContent,
-                }));
-          console.log('Serialized output:', serialized);
-          return JSON.stringify(serialized);
+          const serialized = retrievedDocs
+            .map(
+              (doc) =>
+                `Source: ${doc.metadata.title}\nContent: ${doc.pageContent}`,
+            )
+            .join('\n');
+          return serialized;
         },
       }),
     },
