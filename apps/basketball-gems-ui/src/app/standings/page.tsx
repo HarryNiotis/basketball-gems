@@ -1,35 +1,65 @@
+import {
+  Table,
+  TableCaption,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from '@/components/ui/table';
 import { fetchStandings } from './fetcher';
-import { Card, CardContent } from '@/components/ui/card';
 
 export default async function Teams() {
   const standings = await fetchStandings();
 
   return (
-    <>
-      <div className="grid grid-cols-1 gap-6 overflow-y-auto pr-4">
-        {standings.map((standing) => (
-          <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer hover:bg-gray-50">
-            <CardContent className="p-6 flex flex-row items-center text-center">
-              {standing.club.images.crest && (
-                <div className="mb-4">
+    // <div className="gap-6 overflow-y-auto pr-4">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold text-xl">Pos</TableHead>
+          <TableHead className="text-center font-bold text-xl">Team</TableHead>
+          <TableHead className="text-center font-bold text-xl">
+            Games Played
+          </TableHead>
+          <TableHead className="text-center font-bold text-xl">
+            Games Won
+          </TableHead>
+          <TableHead className="text-center font-bold text-xl">
+            Games Lost
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {standings.map((standing, index) => (
+          <TableRow key={index}>
+            <TableCell className="text-lg">{standing.data.position}</TableCell>
+            <TableCell className="w-[100px]">
+              {standing.club.images.crest ? (
+                <div className="m-1">
                   <img
                     src={standing.club.images.crest}
                     alt={standing.club.name}
-                    className="w-full h-32 object-contain rounded-lg"
+                    className="w-full h-12 object-contain rounded-lg"
                   />
                 </div>
+              ) : (
+                standing.club.name
               )}
-
-              <div className="flex-1 flex flex-col justify-center w-full">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">
-                  {standing.data.gamesPlayed} GP - {standing.data.gamesWon}W -{' '}
-                  {standing.data.gamesLost}L
-                </h3>
-              </div>
-            </CardContent>
-          </Card>
+            </TableCell>
+            <TableCell className="text-center text-lg">
+              {standing.data.gamesPlayed}
+            </TableCell>
+            <TableCell className="text-center text-lg">
+              {standing.data.gamesWon}
+            </TableCell>
+            <TableCell className="text-center text-lg">
+              {standing.data.gamesLost}
+            </TableCell>
+          </TableRow>
         ))}
-      </div>
-    </>
+      </TableBody>
+    </Table>
+    // </div>
   );
 }
