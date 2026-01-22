@@ -17,8 +17,6 @@ export async function fetchStandings(): Promise<TeamStanding[]> {
       throw new Error('Current round not found');
     }
 
-    console.log('Current Round:', { currentRound });
-
     const response = await fetch(
       `${process.env.API_BASE_URL}/rounds/${currentRound.round}/standings`,
     );
