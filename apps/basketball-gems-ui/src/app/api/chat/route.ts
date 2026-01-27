@@ -9,10 +9,10 @@ export async function POST(req: Request) {
   const result = streamText({
     model: openai('gpt-5'),
     system:
-      'You are a helpful assistant specialised in basketball.' +
+      'You are a helpful assistant specialised in Euroleague basketball.' +
       'You have access to a tool that retrieves context from a blog post.' +
       'Use the tool to help answer user queries.' +
-      'Answer in a concise and informative manner.',
+      'Answer in a concise and informative manner. if there is no relevant information from the tool, respond with results from your own knowledge.',
     messages: await convertToModelMessages(messages),
     tools: {
       basketball: tool({

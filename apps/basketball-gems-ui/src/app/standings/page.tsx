@@ -7,6 +7,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { fetchStandings } from './fetcher';
+import Link from 'next/link';
 
 export default async function Teams() {
   const standings = await fetchStandings();
@@ -34,17 +35,19 @@ export default async function Teams() {
           <TableRow key={index}>
             <TableCell className="text-lg">{standing.data.position}</TableCell>
             <TableCell className="w-[100px]">
-              {standing.club.images.crest ? (
-                <div className="m-1">
-                  <img
-                    src={standing.club.images.crest}
-                    alt={standing.club.name}
-                    className="w-full h-12 object-contain rounded-lg"
-                  />
-                </div>
-              ) : (
-                standing.club.name
-              )}
+              <Link href={`/teams/${standing.club.code}`}>
+                {standing.club.images.crest ? (
+                  <div className="m-1">
+                    <img
+                      src={standing.club.images.crest}
+                      alt={standing.club.name}
+                      className="w-full h-12 object-contain rounded-lg"
+                    />
+                  </div>
+                ) : (
+                  standing.club.name
+                )}
+              </Link>
             </TableCell>
             <TableCell className="text-center text-lg">
               {standing.data.gamesPlayed}
