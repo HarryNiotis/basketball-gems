@@ -181,10 +181,6 @@ export type GetStandingsResponse = {
   standings: TeamStanding[];
 };
 
-export type GetCurrentStandingsResponse = {
-  currentStandings: TeamStanding[];
-};
-
 // Query Variable Types
 export type GetTeamByCodeVars = {
   code: string;

@@ -198,6 +198,6 @@ export const typeDefs = `#graphql
     rounds(phaseTypeCode: String): [Round!]!
     
     # Get standings - uses current round if not specified
-    standings(round: Int): [Standing!]!
+    standings(round: Int): [TeamStanding!]!
   }
 `;

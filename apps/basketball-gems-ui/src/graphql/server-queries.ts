@@ -8,11 +8,10 @@ import {
   GET_TEAM_GAMES,
   GET_ROUNDS,
   GET_STANDINGS,
-  GET_CURRENT_STANDINGS,
   GET_GAMES,
   GET_GAME,
 } from './queries';
-import type { Team, Game, Round, Standing, TeamStanding } from './types';
+import type { Team, Game, Round, TeamStanding } from './types';
 
 /**
  * Fetch all teams (Server Component)
@@ -65,26 +64,16 @@ export async function fetchRounds(phaseTypeCode?: string): Promise<Round[]> {
  * Fetch standings for a specific round (Server Component)
  */
 export async function fetchStandingsByRound(
-  round: number,
-): Promise<Standing[]> {
+  round?: number,
+): Promise<TeamStanding[]> {
   const client = getClient();
-  const { data } = await client.query<{ standings: Standing[] }>({
+
+  const response = await client.query<{ standings: TeamStanding[] }>({
     query: GET_STANDINGS,
     variables: { round },
   });
-  return data?.standings ?? [];
-}
-
-/**
- * Fetch current standings (Server Component)
- * This automatically determines the current round
- */
-export async function fetchCurrentStandings(): Promise<TeamStanding[]> {
-  const client = getClient();
-  const { data } = await client.query<{ currentStandings: TeamStanding[] }>({
-    query: GET_CURRENT_STANDINGS,
-  });
-  return data?.currentStandings ?? [];
+  console.log('Fetched standings data:', response);
+  return response.data?.standings ?? [];
 }
 
 /**

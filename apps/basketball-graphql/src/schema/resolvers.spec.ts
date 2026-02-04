@@ -78,23 +78,6 @@ describe('GraphQL Resolvers', () => {
     });
   });
 
-  describe('Query.currentStandings', () => {
-    it('should fetch current standings', async () => {
-      const mockStandings = [
-        { club: { code: 'BAR' }, data: { position: 1 } },
-        { club: { code: 'MAD' }, data: { position: 2 } },
-      ];
-      mockDataSource.getCurrentStandings = jest
-        .fn()
-        .mockResolvedValue(mockStandings);
-
-      const result = await resolvers.Query.currentStandings(null, {}, context);
-
-      expect(mockDataSource.getCurrentStandings).toHaveBeenCalled();
-      expect(result).toEqual(mockStandings);
-    });
-  });
-
   describe('Partials.extraPeriods', () => {
     it('should convert extraPeriods object to JSON string', () => {
       const parent = { extraPeriods: { OT1: 10, OT2: 8 } };

@@ -84,18 +84,10 @@ export const resolvers = {
       { dataSources }: Context,
     ) => {
       if (round !== undefined) {
-        return dataSources.euroleague.getStandings(round);
+        const data = await dataSources.euroleague.getStandings(round);
+        return data[0]?.standings || [];
       }
       // Get current round and return standings for it
-      return dataSources.euroleague.getCurrentStandingsWithGroup();
-    },
-
-    // Keep for backwards compatibility
-    currentStandings: async (
-      _: unknown,
-      __: unknown,
-      { dataSources }: Context,
-    ) => {
       return dataSources.euroleague.getCurrentStandings();
     },
   },

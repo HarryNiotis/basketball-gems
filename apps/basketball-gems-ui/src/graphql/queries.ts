@@ -212,26 +212,6 @@ export const GET_STANDINGS = gql`
   ${TEAM_STANDING_FRAGMENT}
   query GetStandings($round: Int) {
     standings(round: $round) {
-      group {
-        id
-        order
-        name
-        rawName
-        phaseTypeCode
-        seasonCode
-      }
-      standings {
-        ...TeamStandingFields
-      }
-    }
-  }
-`;
-
-// Query: Get current standings (combines rounds + standings logic)
-export const GET_CURRENT_STANDINGS = gql`
-  ${TEAM_STANDING_FRAGMENT}
-  query GetCurrentStandings {
-    currentStandings {
       ...TeamStandingFields
     }
   }

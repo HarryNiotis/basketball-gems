@@ -8,7 +8,6 @@ import {
   GET_TEAM_GAMES,
   GET_ROUNDS,
   GET_STANDINGS,
-  GET_CURRENT_STANDINGS,
   GET_GAMES,
   GET_GAME,
 } from './queries';
@@ -16,7 +15,6 @@ import type {
   Team,
   Game,
   Round,
-  Standing,
   TeamStanding,
   GetTeamByCodeVars,
   GetTeamGamesVars,
@@ -54,15 +52,13 @@ export function useRounds(phaseTypeCode?: string) {
   });
 }
 
-export function useStandings(round: number) {
-  return useQuery<{ standings: Standing[] }, GetStandingsVars>(GET_STANDINGS, {
-    variables: { round },
-    skip: !round,
-  });
-}
-
-export function useCurrentStandings() {
-  return useQuery<{ currentStandings: TeamStanding[] }>(GET_CURRENT_STANDINGS);
+export function useStandings(round?: number) {
+  return useQuery<{ standings: TeamStanding[] }, GetStandingsVars>(
+    GET_STANDINGS,
+    {
+      variables: { round },
+    },
+  );
 }
 
 export function useGames(variables?: GetGamesVars) {
@@ -110,18 +106,12 @@ export function useRoundsSuspense(phaseTypeCode?: string) {
   });
 }
 
-export function useStandingsSuspense(round: number) {
-  return useSuspenseQuery<{ standings: Standing[] }, GetStandingsVars>(
+export function useStandingsSuspense(round?: number) {
+  return useSuspenseQuery<{ standings: TeamStanding[] }, GetStandingsVars>(
     GET_STANDINGS,
     {
       variables: { round },
     },
-  );
-}
-
-export function useCurrentStandingsSuspense() {
-  return useSuspenseQuery<{ currentStandings: TeamStanding[] }>(
-    GET_CURRENT_STANDINGS,
   );
 }
 

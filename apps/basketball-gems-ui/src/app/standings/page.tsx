@@ -6,11 +6,12 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { fetchStandings } from './fetcher';
+import { fetchStandingsByRound } from '@/graphql/server-queries';
 import Link from 'next/link';
 
 export default async function Teams() {
-  const standings = await fetchStandings();
+  const standings = await fetchStandingsByRound();
+  console.log('Standings:', standings);
 
   return (
     // <div className="gap-6 overflow-y-auto pr-4">
