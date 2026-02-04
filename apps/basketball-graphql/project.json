@@ -1,0 +1,70 @@
+{
+  "name": "basketball-graphql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/basketball-graphql/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/basketball-graphql",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "apps/basketball-graphql/src/main.ts",
+        "tsConfig": "apps/basketball-graphql/tsconfig.app.json",
+        "assets": ["apps/basketball-graphql/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "continuous": true,
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "basketball-graphql:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "basketball-graphql:build:development"
+        },
+        "production": {
+          "buildTarget": "basketball-graphql:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/basketball-graphql/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

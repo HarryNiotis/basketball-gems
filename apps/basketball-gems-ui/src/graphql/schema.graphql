@@ -1,0 +1,206 @@
+# Basketball Gems GraphQL Schema
+# This schema defines the types and queries for the basketball application
+
+scalar JSON
+
+# Club/Team Images
+type ClubImages {
+  crest: String
+}
+
+# Venue Images
+type VenueImages {
+  medium: String
+}
+
+# Country information
+type Country {
+  code: String!
+  name: String!
+}
+
+# Club info used in game scores
+type ClubInfo {
+  code: String!
+  name: String!
+  abbreviatedName: String!
+  editorialName: String!
+  tvCode: String!
+  isVirtual: Boolean!
+  images: ClubImages
+}
+
+# Full team/club information
+type Team {
+  code: String!
+  name: String!
+  abbreviatedName: String!
+  editorialName: String!
+  tvCode: String!
+  isVirtual: Boolean!
+  images: ClubImages
+  sponsor: String
+  clubPermanentName: String
+  clubPermanentAlias: String
+  country: Country
+  address: String
+  website: String
+  ticketsUrl: String
+  twitterAccount: String
+  venueCode: String
+  city: String
+  president: String
+  phone: String
+}
+
+# Season information
+type Season {
+  name: String!
+  code: String!
+  alias: String!
+  competitionCode: String!
+  year: Int!
+  startDate: String!
+}
+
+# Group/Phase group
+type Group {
+  id: String!
+  order: Int!
+  name: String!
+  rawName: String!
+  phaseTypeCode: String!
+  seasonCode: String!
+}
+
+# Phase type
+type Phase {
+  code: String!
+  alias: String!
+  name: String!
+  isGroupPhase: Boolean!
+}
+
+# Venue information
+type Venue {
+  name: String!
+  code: String!
+  capacity: Int!
+  address: String
+  images: VenueImages
+  active: Boolean!
+  notes: String
+}
+
+# Quarter/Period partials
+type Partials {
+  partials1: Int!
+  partials2: Int!
+  partials3: Int!
+  partials4: Int!
+  extraPeriods: JSON
+}
+
+# Game score for a team
+type Score {
+  club: ClubInfo!
+  score: Int!
+  standingsScore: Int!
+  partials: Partials!
+}
+
+# A basketball game
+type Game {
+  id: String!
+  identifier: String!
+  gameCode: Int!
+  season: Season!
+  group: Group!
+  phaseType: Phase!
+  round: Int!
+  roundAlias: String!
+  roundName: String!
+  played: Boolean!
+  date: String!
+  confirmedDate: Boolean!
+  confirmedHour: Boolean!
+  localTimeZone: Int!
+  localDate: String!
+  utcDate: String!
+  local: Score!
+  road: Score!
+  audience: Int
+  audienceConfirmed: Boolean!
+  socialFeed: String
+  operationsCode: String
+  referee1: String
+  referee2: String
+  referee3: String
+  referee4: String
+  venue: Venue!
+  isNeutralVenue: Boolean!
+  gameStatus: String!
+  winner: String
+}
+
+# Round information
+type Round {
+  seasonCode: String!
+  phaseTypeCode: String!
+  round: Int!
+  index: Int!
+  name: String!
+  minGameStartDate: String!
+  maxGameStartDate: String!
+  datesFormatted: String!
+}
+
+# Standing data for a team
+type StandingData {
+  position: Int!
+  gamesPlayed: Int!
+  gamesWon: Int!
+  gamesLost: Int!
+  pointsFavour: Int!
+  pointsAgainst: Int!
+  qualified: Boolean!
+}
+
+# Team standing in a group
+type TeamStanding {
+  club: Team!
+  data: StandingData!
+}
+
+# Full standing including group info
+type Standing {
+  group: Group!
+  standings: [TeamStanding!]!
+}
+
+# Root Query type
+type Query {
+  # Get all teams/clubs
+  teams: [Team!]!
+
+  # Get a single team by code
+  team(code: String!): Team
+
+  # Get games with optional filters
+  games(teamCode: String, round: Int, played: Boolean): [Game!]!
+
+  # Get a single game by ID
+  game(id: String!): Game
+
+  # Get games for a specific team
+  teamGames(teamCode: String!): [Game!]!
+
+  # Get all rounds with optional phase filter
+  rounds(phaseTypeCode: String): [Round!]!
+
+  # Get standings for a specific round
+  standings(round: Int!): [Standing!]!
+
+  # Get current standings (automatically determines current round)
+  currentStandings: [TeamStanding!]!
+}
