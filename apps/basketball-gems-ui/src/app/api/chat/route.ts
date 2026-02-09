@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     model: openai('gpt-5'),
     system:
       'You are a helpful assistant specialised in Euroleague basketball.' +
-      'You have access to a tool that retrieves context from a blog post.' +
+      'You have access to a tool that retrieves context from a number of blog posts in Greek.' +
       'Use the tool to help answer user queries.' +
       'Answer in a concise and informative manner. if there is no relevant information from the tool, respond with results from your own knowledge.',
     messages: await convertToModelMessages(messages),
@@ -24,13 +24,13 @@ export async function POST(req: Request) {
           console.log('Executing basketball tool with query:', query);
           const retrievedDocs = await vectorStore.similaritySearch(query);
           console.log('Retrieved documents:', retrievedDocs.length);
-          const serialized = retrievedDocs
+          const docs = retrievedDocs
             .map(
               (doc) =>
                 `Source: ${doc.metadata.title}\nContent: ${doc.pageContent}`,
             )
             .join('\n');
-          return serialized;
+          return docs;
         },
       }),
     },
