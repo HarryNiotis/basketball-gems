@@ -1,95 +1,98 @@
-# BasketballGems
+# Basketball Gems
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+An [Nx](https://nx.dev) monorepo exploring Euroleague basketball data through multiple backend technologies, a GraphQL layer, a Next.js frontend, and a RAG-powered chatbot.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Projects
 
-Run `npx nx graph` to visually explore what got created. Now, let's get you up to speed!
+### REST APIs (`apps/basketball-api*`)
 
-## Run tasks
+Three equivalent REST APIs built with different stacks, all backed by a sample basketball database:
 
-To run tasks with Nx use:
+| Project | Stack | Path |
+|---|---|---|
+| **basketball-api** | Python (FastAPI) | `apps/basketball-api` |
+| **basketball-api-dotnet** | .NET (ASP.NET Core) | `apps/basketball-api-dotnet` |
+| **basketball-api-express** | Node.js (Express + TypeScript) | `apps/basketball-api-express` |
 
-```sh
-npx nx <target> <project-name>
-```
+### GraphQL Server (`apps/basketball-graphql`)
 
-For example:
+An Apollo Server that wraps the public Euroleague APIs, exposing competition, team, and game data through a unified GraphQL schema.
 
-```sh
-npx nx build myproject
-```
+### Next.js Frontend (`apps/basketball-gems-ui`)
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+A Next.js application that provides:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Euroleague team stats and standings
+- A chatbot interface for asking questions about Euroleague basketball
 
-## Add new projects
+### RAG Pipeline (`apps/basketball-rag-node`)
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+A Node.js pipeline that:
 
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
-```
+1. Scrapes and processes blog posts from a basketball website
+2. Creates a vector store from the processed content
+3. Serves as the knowledge base used by the chatbot in the frontend
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+## Nx Tasks
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+Run any target with `npx nx <target> <project>`.
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
-```
+### basketball-api (Python)
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+| Target | Description |
+|---|---|
+| `build` | Build the Python package |
+| `test` | Run pytest unit tests |
+| `lint` | Run flake8 linter |
+| `serve` | — *(run manually via Poetry)* |
+| `install` | Install Poetry dependencies |
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### basketball-api-dotnet (.NET)
 
-## Set up CI!
+| Target | Description |
+|---|---|
+| `build` | Build the .NET project (Debug) |
+| `build:release` | Build in Release configuration |
+| `run` | Run the application (`dotnet run`) |
+| `watch` | Watch for changes and rebuild/rerun |
+| `restore` | Restore NuGet dependencies |
+| `clean` | Clean build artifacts |
+| `publish` | Publish the application |
 
-### Step 1
+### basketball-api-express (Express)
 
-To connect to Nx Cloud, run the following command:
+| Target | Description |
+|---|---|
+| `build` | Webpack production build |
+| `serve` | Start the dev server (Node) |
+| `test` | Run Jest tests |
+| `lint` | Run ESLint |
 
-```sh
-npx nx connect
-```
+### basketball-graphql (Apollo Server)
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+| Target | Description |
+|---|---|
+| `build` | esbuild bundle |
+| `serve` | Start the GraphQL server |
+| `test` | Run Jest tests |
+| `lint` | Run ESLint |
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### basketball-gems-ui (Next.js)
 
-### Step 2
+| Target | Description |
+|---|---|
+| `dev` | Start Next.js dev server |
+| `build` | Production build |
+| `start` | Start the production server |
+| `test` | Run Jest tests |
+| `lint` | Run ESLint |
 
-Use the following command to configure a CI workflow for your workspace:
+### basketball-rag-node (RAG Pipeline)
 
-```sh
-npx nx g ci-workflow
-```
+| Target | Description |
+|---|---|
+| `build` | esbuild bundle |
+| `start` | Run the pipeline |
+| `lint` | Run ESLint |
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Run `npx nx graph` to visualise the project dependency graph.
