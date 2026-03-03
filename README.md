@@ -33,66 +33,8 @@ A Node.js pipeline that:
 2. Creates a vector store from the processed content
 3. Serves as the knowledge base used by the chatbot in the frontend
 
-## Nx Tasks
-
-Run any target with `npx nx <target> <project>`.
-
-### basketball-api (Python)
-
-| Target | Description |
-|---|---|
-| `build` | Build the Python package |
-| `test` | Run pytest unit tests |
-| `lint` | Run flake8 linter |
-| `serve` | — *(run manually via Poetry)* |
-| `install` | Install Poetry dependencies |
-
-### basketball-api-dotnet (.NET)
-
-| Target | Description |
-|---|---|
-| `build` | Build the .NET project (Debug) |
-| `build:release` | Build in Release configuration |
-| `run` | Run the application (`dotnet run`) |
-| `watch` | Watch for changes and rebuild/rerun |
-| `restore` | Restore NuGet dependencies |
-| `clean` | Clean build artifacts |
-| `publish` | Publish the application |
-
-### basketball-api-express (Express)
-
-| Target | Description |
-|---|---|
-| `build` | Webpack production build |
-| `serve` | Start the dev server (Node) |
-| `test` | Run Jest tests |
-| `lint` | Run ESLint |
-
-### basketball-graphql (Apollo Server)
-
-| Target | Description |
-|---|---|
-| `build` | esbuild bundle |
-| `serve` | Start the GraphQL server |
-| `test` | Run Jest tests |
-| `lint` | Run ESLint |
-
-### basketball-gems-ui (Next.js)
-
-| Target | Description |
-|---|---|
-| `dev` | Start Next.js dev server |
-| `build` | Production build |
-| `start` | Start the production server |
-| `test` | Run Jest tests |
-| `lint` | Run ESLint |
-
-### basketball-rag-node (RAG Pipeline)
-
-| Target | Description |
-|---|---|
-| `build` | esbuild bundle |
-| `start` | Run the pipeline |
-| `lint` | Run ESLint |
+## Nx
 
 Run `npx nx graph` to visualise the project dependency graph.
+
+For available tasks in each project, see the individual project READMEs.
