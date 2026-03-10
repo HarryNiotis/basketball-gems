@@ -9,6 +9,8 @@ A simple REST API built with **FastAPI** and **SQLAlchemy**, backed by a **Postg
 - [Pydantic](https://docs.pydantic.dev/) — Data validation & serialisation
 - [Uvicorn](https://www.uvicorn.org/) — ASGI server
 - [Poetry](https://python-poetry.org/) — Dependency management
+- [Poetry Export plugin](https://github.com/python-poetry/poetry-plugin-export) - Poetry export plugin
+- [Nx python plugin](https://www.npmjs.com/package/@nxlv/python) - Nx Python plugin
 - [Nx](https://nx.dev/) — Monorepo build system
 
 ## Database Schema
