@@ -56,7 +56,7 @@ export const initStore = async () => {
     try {
       console.log(`Loading article: ${articleUrl}`);
       const loader = new CheerioWebBaseLoader(articleUrl, {
-        selector: 'div.content.is-relative > p', // Adjust selector for article content
+        selector: 'div.content.is-relative > p',
       });
       const docs = await loader.load();
 

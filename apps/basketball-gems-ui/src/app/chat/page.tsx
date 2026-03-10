@@ -24,7 +24,11 @@ export default function Chat() {
             <div className="flex flex-col gap-4 p-4">
               {messages.length === 0 ? (
                 <div className="flex items-center justify-center h-full text-gray-500">
-                  <p>Ask about basketball, results, fixtures etc</p>
+                  <p>Ask about Euroleague basketball, results, fixtures etc</p>
+                  <p>
+                    The chatbot has also access to a number of Greek blogs on
+                    the greek teams
+                  </p>
                 </div>
               ) : (
                 messages.map((message) => (
@@ -77,15 +81,26 @@ export default function Chat() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              sendMessage({ text: input });
-              setInput('');
+              if (input.trim()) {
+                sendMessage({ text: input });
+                setInput('');
+              }
             }}
             className="flex gap-2"
           >
             <Textarea
               value={input}
-              placeholder="Ask about basketball..."
+              placeholder="Ask about Euroleague basketball"
               onChange={(e) => setInput(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  if (input.trim()) {
+                    sendMessage({ text: input });
+                    setInput('');
+                  }
+                }
+              }}
               className="flex-1"
             />
             <Button
