@@ -1,0 +1,22 @@
+{
+  "migrations": [
+    {
+      "version": "22.3.2-beta.0",
+      "requires": {
+        "jest": ">=30.0.0"
+      },
+      "description": "Replace removed matcher aliases in Jest v30 with their corresponding matcher",
+      "implementation": "./src/migrations/update-21-3-0/replace-removed-matcher-aliases",
+      "package": "@nx/jest",
+      "name": "replace-removed-matcher-aliases-v22-3"
+    }
+  ],
+  "nx-console": {
+    "initialGitRef": {
+      "ref": "bd06de671fb386c1fab899b11e4f9f72e3159635",
+      "subject": "Merge branch 'main' of https://github.com/HarryNiotis/basketball-gems"
+    },
+    "targetVersion": "latest",
+    "confirmedPackageUpdates": true
+  }
+}
