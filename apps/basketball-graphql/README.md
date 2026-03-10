@@ -96,9 +96,9 @@ node dist/apps/basketball-graphql/main.js
 
 Copy `.env.example` to `.env` and configure:
 
-- `PORT` - Server port (default: 4000)
+- `PORT` - Server port (default: 5000)
 - `EUROLEAGUE_API_URL` - Euroleague API base URL
 
 ## GraphQL Playground
 
-After starting the server, visit `http://localhost:4000` to access the GraphQL Playground for exploring and testing queries.
+After starting the server, visit `http://localhost:5000` to access the GraphQL Playground for exploring and testing queries.

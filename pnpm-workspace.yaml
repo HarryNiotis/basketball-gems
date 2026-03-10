@@ -4,7 +4,9 @@ onlyBuiltDependencies:
   - '@swc/core'
   - core-js-pure
   - esbuild
+  - msw
   - nx
   - onnxruntime-node
   - protobufjs
+  - sharp
   - unrs-resolver
