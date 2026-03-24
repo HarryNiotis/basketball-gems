@@ -1,0 +1,46 @@
+{
+  "name": "basketball-gems-start-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/basketball-gems-start-ui/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/basketball-gems-start-ui",
+        "command": "pnpm vite dev"
+      },
+      "cache": false
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/basketball-gems-start-ui",
+        "command": "pnpm vite build"
+      },
+      "outputs": ["{projectRoot}/.output"]
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/basketball-gems-start-ui",
+        "command": "node .output/server/index.mjs"
+      },
+      "cache": false
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/basketball-gems-start-ui",
+        "command": "pnpm tsc --noEmit -p tsconfig.json"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm eslint apps/basketball-gems-start-ui --max-warnings=0"
+      }
+    }
+  }
+}
