@@ -1,6 +1,8 @@
 import { useReadQuery } from '@apollo/client/react';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { GET_TEAM_BY_CODE, GET_TEAM_GAMES } from '~/lib/graphql/queries';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const Route = createFileRoute('/_authed/teams/$code')({
   loader: ({ context, params }) => ({
@@ -23,13 +25,13 @@ function TeamDetailPage() {
   if (!team) {
     return (
       <div className="feedback-shell">
-        <div className="feedback-card">
+        <Card className="feedback-card">
           <p className="eyebrow">Teams</p>
           <h1>Team not found</h1>
-          <Link className="button button--primary" to="/teams">
-            Back to teams
-          </Link>
-        </div>
+          <Button asChild>
+            <Link to="/teams">Back to teams</Link>
+          </Button>
+        </Card>
       </div>
     );
   }
@@ -56,21 +58,35 @@ function TeamDetailPage() {
       </section>
 
       <section className="info-grid">
-        <article className="feature-card">
-          <p className="eyebrow">Club</p>
-          <h2>{team.name}</h2>
-          <p className="muted-copy">{team.sponsor || 'Sponsor not listed'}</p>
-        </article>
-        <article className="feature-card">
-          <p className="eyebrow">Venue</p>
-          <h2>{team.venueCode || 'TBD'}</h2>
-          <p className="muted-copy">{team.address || 'Address unavailable'}</p>
-        </article>
-        <article className="feature-card">
-          <p className="eyebrow">Contact</p>
-          <h2>{team.website || 'No website'}</h2>
-          <p className="muted-copy">{team.phone || 'Phone unavailable'}</p>
-        </article>
+        <Card className="feature-card">
+          <CardHeader>
+            <p className="eyebrow">Club</p>
+            <CardTitle>{team.name}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="muted-copy">{team.sponsor || 'Sponsor not listed'}</p>
+          </CardContent>
+        </Card>
+        <Card className="feature-card">
+          <CardHeader>
+            <p className="eyebrow">Venue</p>
+            <CardTitle>{team.venueCode || 'TBD'}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="muted-copy">
+              {team.address || 'Address unavailable'}
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="feature-card">
+          <CardHeader>
+            <p className="eyebrow">Contact</p>
+            <CardTitle>{team.website || 'No website'}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="muted-copy">{team.phone || 'Phone unavailable'}</p>
+          </CardContent>
+        </Card>
       </section>
 
       <section className="page-stack">
@@ -82,23 +98,25 @@ function TeamDetailPage() {
         </div>
         <div className="games-grid">
           {games.map((game) => (
-            <article className="game-card" key={game.id}>
-              <div className="game-card__meta">
-                <span>{new Date(game.date).toLocaleDateString()}</span>
-                <span>{game.played ? 'Final' : 'Upcoming'}</span>
-              </div>
-              <div className="score-row">
-                <div className="score-team">
-                  <span>{game.local.club.abbreviatedName}</span>
-                  {game.played ? <strong>{game.local.score}</strong> : null}
+            <Card className="game-card" key={game.id}>
+              <CardContent className="space-y-4 pt-6">
+                <div className="game-card__meta">
+                  <span>{new Date(game.date).toLocaleDateString()}</span>
+                  <span>{game.played ? 'Final' : 'Upcoming'}</span>
                 </div>
-                <div className="score-divider">vs</div>
-                <div className="score-team">
-                  <span>{game.road.club.abbreviatedName}</span>
-                  {game.played ? <strong>{game.road.score}</strong> : null}
+                <div className="score-row">
+                  <div className="score-team">
+                    <span>{game.local.club.abbreviatedName}</span>
+                    {game.played ? <strong>{game.local.score}</strong> : null}
+                  </div>
+                  <div className="score-divider">vs</div>
+                  <div className="score-team">
+                    <span>{game.road.club.abbreviatedName}</span>
+                    {game.played ? <strong>{game.road.score}</strong> : null}
+                  </div>
                 </div>
-              </div>
-            </article>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>

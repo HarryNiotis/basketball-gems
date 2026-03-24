@@ -1,4 +1,11 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 const cards = [
   {
@@ -41,14 +48,18 @@ function DashboardPage() {
 
       <section className="feature-grid">
         {cards.map((card) => (
-          <Link
-            className="feature-card feature-card--interactive"
-            key={card.to}
-            to={card.to}
-          >
-            <p className="eyebrow">{card.eyebrow}</p>
-            <h2>{card.title}</h2>
-            <p className="muted-copy">{card.body}</p>
+          <Link key={card.to} to={card.to}>
+            <Card className="feature-card feature-card--interactive h-full">
+              <CardHeader>
+                <p className="eyebrow">{card.eyebrow}</p>
+                <CardTitle>{card.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="muted-copy">
+                  {card.body}
+                </CardDescription>
+              </CardContent>
+            </Card>
           </Link>
         ))}
       </section>

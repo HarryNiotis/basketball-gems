@@ -3,6 +3,10 @@
 import { useRouter } from '@tanstack/react-router';
 import { useState, useTransition } from 'react';
 import { askBasketballAssistant } from '~/lib/chat';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Textarea } from '@/components/ui/text-area';
 
 type ChatMessage = {
   id: string;
@@ -58,77 +62,88 @@ export function ChatPanel() {
 
   return (
     <div className="chat-layout">
-      <section className="feature-card chat-stage">
-        <div className="section-heading">
-          <div>
+      <Card className="chat-stage">
+        <CardHeader className="flex flex-row items-end justify-between gap-4">
+          <div className="space-y-2">
             <p className="eyebrow">Assistant</p>
-            <h2>Basketball analyst</h2>
+            <CardTitle>Basketball analyst</CardTitle>
           </div>
-          <p className="muted-copy">
+          <p className="text-muted-foreground max-w-md text-sm leading-6">
             The server function is already wired for retrieval-augmented
             answers.
           </p>
-        </div>
-        <div className="chat-thread">
-          {messages.length === 0 ? (
-            <div className="empty-state">
-              <p>
-                Ask about EuroLeague form, fixtures, roster context, or trends.
-              </p>
-              <div className="prompt-row">
-                {suggestedPrompts.map((suggestion) => (
-                  <button
-                    className="chip"
-                    key={suggestion}
-                    onClick={() => submitPrompt(suggestion)}
-                    type="button"
+        </CardHeader>
+        <CardContent className="pt-0">
+          <ScrollArea className="chat-thread rounded-xl border">
+            <div className="flex min-h-[320px] flex-col gap-4 p-4">
+              {messages.length === 0 ? (
+                <div className="empty-state">
+                  <p>
+                    Ask about EuroLeague form, fixtures, roster context, or
+                    trends.
+                  </p>
+                  <div className="prompt-row">
+                    {suggestedPrompts.map((suggestion) => (
+                      <Button
+                        className="chip"
+                        key={suggestion}
+                        onClick={() => submitPrompt(suggestion)}
+                        type="button"
+                        variant="outline"
+                      >
+                        {suggestion}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                messages.map((message) => (
+                  <article
+                    className={`chat-bubble chat-bubble--${message.role}`}
+                    key={message.id}
                   >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
+                    <p className="eyebrow">{message.role}</p>
+                    <p>{message.text}</p>
+                  </article>
+                ))
+              )}
             </div>
-          ) : (
-            messages.map((message) => (
-              <article
-                className={`chat-bubble chat-bubble--${message.role}`}
-                key={message.id}
-              >
-                <p className="eyebrow">{message.role}</p>
-                <p>{message.text}</p>
-              </article>
-            ))
-          )}
-        </div>
-      </section>
+          </ScrollArea>
+        </CardContent>
+      </Card>
 
-      <form
-        className="chat-composer"
-        onSubmit={(event) => {
-          event.preventDefault();
-          submitPrompt(prompt);
-        }}
-      >
-        <label className="field-label" htmlFor="chat-prompt">
-          Ask a question
-        </label>
-        <textarea
-          className="text-input text-input--area"
-          id="chat-prompt"
-          onChange={(event) => setPrompt(event.target.value)}
-          placeholder="Ask about standings, team form, or upcoming matchups"
-          rows={4}
-          value={prompt}
-        />
-        <div className="composer-actions">
-          <span className="muted-copy">
-            {isPending ? 'Thinking through the scouting report...' : 'Ready'}
-          </span>
-          <button className="button button--primary" disabled={isPending}>
-            Send
-          </button>
-        </div>
-      </form>
+      <Card>
+        <CardContent className="pt-6">
+          <form
+            className="chat-composer"
+            onSubmit={(event) => {
+              event.preventDefault();
+              submitPrompt(prompt);
+            }}
+          >
+            <label className="field-label" htmlFor="chat-prompt">
+              Ask a question
+            </label>
+            <Textarea
+              id="chat-prompt"
+              onChange={(event) => setPrompt(event.target.value)}
+              placeholder="Ask about standings, team form, or upcoming matchups"
+              rows={4}
+              value={prompt}
+            />
+            <div className="composer-actions">
+              <span className="muted-copy">
+                {isPending
+                  ? 'Thinking through the scouting report...'
+                  : 'Ready'}
+              </span>
+              <Button disabled={isPending} type="submit">
+                Send
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

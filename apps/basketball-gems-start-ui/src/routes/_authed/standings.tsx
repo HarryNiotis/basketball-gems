@@ -1,6 +1,14 @@
 import { useReadQuery } from '@apollo/client/react';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { GET_STANDINGS } from '~/lib/graphql/queries';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export const Route = createFileRoute('/_authed/standings')({
   loader: ({ context }) => ({
@@ -27,21 +35,21 @@ function StandingsPage() {
       </section>
 
       <div className="table-wrap">
-        <table className="standings-table">
-          <thead>
-            <tr>
-              <th>Pos</th>
-              <th>Team</th>
-              <th>Played</th>
-              <th>Won</th>
-              <th>Lost</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="standings-table">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Pos</TableHead>
+              <TableHead>Team</TableHead>
+              <TableHead>Played</TableHead>
+              <TableHead>Won</TableHead>
+              <TableHead>Lost</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {data.standings.map((standing) => (
-              <tr key={standing.club.code}>
-                <td>{standing.data.position}</td>
-                <td>
+              <TableRow key={standing.club.code}>
+                <TableCell>{standing.data.position}</TableCell>
+                <TableCell>
                   <Link params={{ code: standing.club.code }} to="/teams/$code">
                     <span className="standings-team">
                       {standing.club.images?.crest ? (
@@ -54,14 +62,14 @@ function StandingsPage() {
                       <span>{standing.club.abbreviatedName}</span>
                     </span>
                   </Link>
-                </td>
-                <td>{standing.data.gamesPlayed}</td>
-                <td>{standing.data.gamesWon}</td>
-                <td>{standing.data.gamesLost}</td>
-              </tr>
+                </TableCell>
+                <TableCell>{standing.data.gamesPlayed}</TableCell>
+                <TableCell>{standing.data.gamesWon}</TableCell>
+                <TableCell>{standing.data.gamesLost}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

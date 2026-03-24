@@ -1,6 +1,7 @@
 import { useReadQuery } from '@apollo/client/react';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { GET_TEAMS } from '~/lib/graphql/queries';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const Route = createFileRoute('/_authed/teams')({
   loader: ({ context }) => ({
@@ -28,27 +29,26 @@ function TeamsPage() {
 
       <section className="team-grid">
         {teams.map((team) => (
-          <Link
-            className="team-card"
-            key={team.code}
-            params={{ code: team.code }}
-            to="/teams/$code"
-          >
-            {team.images?.crest ? (
-              <img
-                alt={team.name}
-                className="team-crest"
-                src={team.images.crest}
-              />
-            ) : (
-              <div className="team-crest team-crest--placeholder">
-                {team.abbreviatedName}
-              </div>
-            )}
-            <div>
-              <h2>{team.abbreviatedName}</h2>
-              <p className="muted-copy">{team.city || team.country.name}</p>
-            </div>
+          <Link key={team.code} params={{ code: team.code }} to="/teams/$code">
+            <Card className="team-card h-full transition-shadow hover:shadow-md">
+              <CardContent className="flex h-full flex-col items-center gap-4 pt-6 text-center">
+                {team.images?.crest ? (
+                  <img
+                    alt={team.name}
+                    className="team-crest"
+                    src={team.images.crest}
+                  />
+                ) : (
+                  <div className="team-crest team-crest--placeholder">
+                    {team.abbreviatedName}
+                  </div>
+                )}
+                <div>
+                  <h2>{team.abbreviatedName}</h2>
+                  <p className="muted-copy">{team.city || team.country.name}</p>
+                </div>
+              </CardContent>
+            </Card>
           </Link>
         ))}
       </section>
