@@ -57,3 +57,7 @@ out
 **/bin/
 **/obj/
 /artifacts/
+
+# Tanstack Start
+.tanstack
+.output/
