@@ -10,15 +10,3 @@ allowBuilds:
   protobufjs: true
   sharp: true
   unrs-resolver: true
-onlyBuiltDependencies:
-  - '@apollo/protobufjs'
-  - '@parcel/watcher'
-  - '@swc/core'
-  - core-js-pure
-  - esbuild
-  - msw
-  - nx
-  - onnxruntime-node
-  - protobufjs
-  - sharp
-  - unrs-resolver
